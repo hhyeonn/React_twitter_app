@@ -3,6 +3,8 @@ import { db, storage } from 'fbase';
 import { collection, addDoc, query, getDocs, onSnapshot } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import "styles/tweetFactory.scss";
 
 
 function TweetFactory({userObj}) {
@@ -51,19 +53,34 @@ function TweetFactory({userObj}) {
     const onClearAttachment = () => setAttachment("");
 
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" placeholder="What's on your mind"
-        value={tweet} onChange={onChange} maxLength={120} />
-      <input type="file" accept='image/*' onChange={onFileChange} />
+    <form onSubmit={onSubmit} className="factoryForm">
+
+      <div className="factoryInput__container">
+        <input type="text" placeholder="What's on your mind"
+          value={tweet} onChange={onChange} maxLength={120}
+          className="factoryInput__input" />
+          <input type="submit" value="&rarr;" className="factoryInput__arrow" />
+      </div>
+
+      <label for="attach-file" className="factoryInput__label">
+        <span>Add photos</span>
+        <FontAwesomeIcon icon="fa-solid fa-plus" />
+      </label>
       {/* accept: 사진만 추가, multiful 추가하면 이미지파일 여러개 업로드 가능 */}
-      <input type="submit" value="Tweet" />
+      <input type="file" accept='image/*' onChange={onFileChange} 
+        id="attach-file" style={{opacity: 0,display:'none'}}
+      />
+
       {/* attachment 값이 있을경우 이미지 사진이 나옴 */}
-      {attachment && 
-        <div>
-          <img src={attachment} width="50" height="50" />
-          <button onClick={onClearAttachment}>Clear</button>
+      {attachment && (
+        <div className="factoryForm__attachment">
+          <img src={attachment} style={{backgroundImage: attachment,}} />
+          <div className="factoryForm__clear" onClick={onClearAttachment}>
+            <span>Remove</span>
+            <FontAwesomeIcon icon="fa-solid fa-xmark" />
+          </div>
         </div>
-      }
+      )}
     </form>
   )
 }

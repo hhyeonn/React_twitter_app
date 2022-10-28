@@ -1,0 +1,15 @@
+.authContainer{
+    display: flex;flex-direction: column;height: 100vh;/* 뷰포트 그대로 */
+    justify-content: center;align-items: center;
+    .authBtns{
+        display: flex;justify-content: space-between;
+        width: 100%;max-width: 320px;
+        .authBtn{
+            cursor: pointer;
+            border-radius: 20px;border: none;
+            padding: 10px;
+            font-size: 12px;text-align: center;
+            background: #fff;
+        }
+    }
+}
